@@ -8,6 +8,12 @@ device = torch.device(
     "cuda" if torch.cuda.is_available()
     else "cpu"
 )
+# device = torch.device(
+#     "mps" if torch.backends.mps.is_available()
+#     else "cpu"
+# )
+
+# print(f"Using device: {device}")
 print(f"Using device: {device}")
 
 def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_height, in_width, kernel_channels, 
@@ -66,6 +72,11 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
         validation_losses.append(validation_loss)
         validation_accuracies.append(validation_accuracy)
         validation_f1_scores.append(validation_f1_score)
+        print(epoch)
+        print(corrected/total)
+        print(training_loss)
+        print(validation_accuracy)
+        print(validation_loss)
 
     return {
         "training_losses": training_losses,
