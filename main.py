@@ -5,9 +5,9 @@ from src.model import CNN
 from src.train import train_model
 
 def main():
-    epochs = 25
+    epochs = 50
     num_blocks = 5
-    kernel_channels = [64, 128, 256, 512, 512]
+    kernel_channels = [32, 64, 128, 256, 512]
     conv_kernel_sizes = [3, 3, 3, 3, 3]
     conv_padding = [1, 1, 1, 1,1]
     conv_stride = [1, 1, 1, 1,1]
@@ -17,7 +17,7 @@ def main():
     num_FC_layers = 1
     FC_layers_sizes = [512]
     optimizer_name = "AdamW"
-    learning_rate = 1e-3
+    learning_rate = 1e-2
     weight_decay = 1e-4
     batch_norm = True
     dropout = True
