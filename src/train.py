@@ -5,10 +5,9 @@ from src.utils import get_optimizer
 from src.evaluate import evaluate
 
 device = torch.device(
-    "mps" if torch.backends.mps.is_available()
+    "cuda" if torch.cuda.is_available()
     else "cpu"
 )
-
 print(f"Using device: {device}")
 
 def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_height, in_width, kernel_channels, 
