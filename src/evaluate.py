@@ -43,7 +43,7 @@ def evaluate(Model, loss_func, val_loader):
             loss=loss_func(outputs, batch_y)
             validation_loss+=loss.item()
         
-    validation_accuracy=corrected/total
+    validation_accuracy=(corrected/total)*100
     validation_f1_score=f1_score(all_labels, all_preds, average='macro')    
     validation_loss=validation_loss/len(val_loader)
 

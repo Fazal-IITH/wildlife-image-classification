@@ -15,7 +15,7 @@ def main():
     pool_stride = [2, 2, 2, 2,2]
     activation = "ReLU"
     num_FC_layers = 1
-    FC_layers_sizes = [1024]
+    FC_layers_sizes = [512]
     optimizer_name = "AdamW"
     learning_rate = 1e-3
     weight_decay = 1e-4
