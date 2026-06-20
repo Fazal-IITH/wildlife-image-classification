@@ -6,7 +6,8 @@ class CNN(nn.Module):
 
     def __init__(self, num_blocks, in_channels, in_height, in_width, kernel_channels, 
                  conv_kernel_sizes, conv_padding, conv_stride, 
-                 pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes):
+                 pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes,
+                 drop_prob, batch_norm=False, dropout=False):
         
         super().__init__()
 
@@ -26,7 +27,9 @@ class CNN(nn.Module):
             "pool_stride length must equal num_blocks"
         assert len(FC_layers_sizes) == num_FC_layers, \
             "FC_layers_sizes length must equal num_FC_layers"
-        
+        assert 0 <= drop_prob < 1, \
+            "drop_prob must be between 0 and 1"
+
         self.hidden_layers= nn.ModuleList()
         self.FC_layers= nn.ModuleList()
 
@@ -34,11 +37,13 @@ class CNN(nn.Module):
         current_in_channels = in_channels
 
         for i in range(num_blocks):
-              
+            # Conv -> Batch_Norm -> Activation -> MaxPool  
             self.hidden_layers.append(nn.Conv2d(in_channels=current_in_channels, out_channels=kernel_channels[i], 
                                                 kernel_size=conv_kernel_sizes[i], stride=conv_stride[i], 
                                                 padding=conv_padding[i]))
-            
+            if batch_norm==True:
+                self.hidden_layers.append(nn.BatchNorm2d(kernel_channels[i]))
+
             self.hidden_layers.append(activation_func(activation))
 
             # if i==0:
@@ -68,6 +73,8 @@ class CNN(nn.Module):
 
             self.FC_layers.append(nn.Linear(in_features=FC_input, out_features=FC_layers_sizes[i]))
             self.FC_layers.append(activation_func(activation))
+            if dropout==True:
+                self.FC_layers.append(nn.Dropout(drop_prob))
             FC_input= FC_layers_sizes[i]
         
         self.output_layer=nn.Linear(FC_input,10)
