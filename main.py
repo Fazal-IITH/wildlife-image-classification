@@ -5,9 +5,9 @@ from src.model import CNN
 from src.train import train_model
 
 def main():
-    epochs = 10
+    epochs = 25
     num_blocks = 4
-    kernel_channels = [16, 32, 64, 128]
+    kernel_channels = [32, 64, 128, 256]
     conv_kernel_sizes = [3, 3, 3, 3]
     conv_padding = [1, 1, 1, 1]
     conv_stride = [1, 1, 1, 1]
@@ -15,7 +15,7 @@ def main():
     pool_stride = [2, 2, 2, 2]
     activation = "ReLU"
     num_FC_layers = 1
-    FC_layers_sizes = [256]
+    FC_layers_sizes = [512]
     optimizer_name = "AdamW"
     learning_rate = 1e-3
     weight_decay = 1e-4
