@@ -58,21 +58,21 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        num_workers=2
+        num_workers=4
     )
 
     val_loader= DataLoader(
         val_dataset,
         batch_size=batch_size,
         shuffle=False, #Why False, bcoz model is not training and we want consistent measurement.
-        num_workers=2
+        num_workers=4
     )
 
     test_loader= DataLoader(
         test_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=2
+        num_workers=4
     )
 
     return train_loader, val_loader, test_loader

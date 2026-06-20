@@ -1,7 +1,10 @@
 import torch
 from sklearn.metrics import f1_score
 
+
 def evaluate(Model, loss_func, val_loader):
+
+    device = next(Model.parameters()).device
 
     validation_loss=0
     validation_accuracy=0
@@ -22,6 +25,9 @@ def evaluate(Model, loss_func, val_loader):
     with torch.no_grad():
         for batch_X, batch_y in val_loader:
 
+            batch_X = batch_X.to(device)
+            batch_y = batch_y.to(device)
+            
             outputs=Model(batch_X)
 
             # For F1-Score

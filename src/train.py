@@ -1,22 +1,26 @@
 import torch
 import torch.nn as nn
-from src.dataset import get_dataloaders
 from src.model import CNN
 from src.utils import get_optimizer
 from src.evaluate import evaluate
 
-def train_model(epochs, num_blocks, in_channels, in_height, in_width, kernel_channels, 
+device = torch.device(
+    "mps" if torch.backends.mps.is_available()
+    else "cpu"
+)
+
+print(f"Using device: {device}")
+
+def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_height, in_width, kernel_channels, 
                  conv_kernel_sizes, conv_padding, conv_stride, 
                  pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes,
                  optimizer_name, batch_norm, dropout, drop_prob, augmentation,
                  learning_rate,weight_decay, gamma, beta1, beta2, batch_size=32):
 
-    train_loader, val_loader, _ = get_dataloaders(in_height, in_width, batch_size, augmentation)
-
     Model= CNN(num_blocks, in_channels, in_height, in_width, kernel_channels, 
                  conv_kernel_sizes, conv_padding, conv_stride, 
                  pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes,
-                 drop_prob, batch_norm, dropout)
+                 drop_prob, batch_norm, dropout).to(device)
     
     loss_func= nn.CrossEntropyLoss()
 
@@ -37,6 +41,9 @@ def train_model(epochs, num_blocks, in_channels, in_height, in_width, kernel_cha
 
         Model.train()
         for batch_X, batch_y in train_loader:
+            
+            batch_X = batch_X.to(device)
+            batch_y = batch_y.to(device)
             
             outputs=Model(batch_X)
 

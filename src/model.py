@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from utils import activation_func
+from src.utils import activation_func
 
 class CNN(nn.Module):
 
