@@ -5,9 +5,9 @@ from src.model import CNN
 from src.train import train_model
 
 def main():
-    epochs = 50
+    epochs = 15
     num_blocks = 5
-    kernel_channels = [64, 128, 256, 512, 512]
+    kernel_channels = [32, 32, 32, 32, 32] #[64, 128, 256, 512, 512]
     conv_kernel_sizes = [3, 3, 3, 3, 3]
     conv_padding = [1, 1, 1, 1,1]
     conv_stride = [1, 1, 1, 1,1]
@@ -15,7 +15,7 @@ def main():
     pool_stride = [2, 2, 2, 2,2]
     activation = "ReLU"
     num_FC_layers = 1
-    FC_layers_sizes = [512]
+    FC_layers_sizes = [256]
     optimizer_name = "AdamW"
     learning_rate = 1e-3
     weight_decay = 1e-4
@@ -40,8 +40,7 @@ def main():
                     optimizer_name, batch_norm, dropout, drop_prob, augmentation,
                     learning_rate,weight_decay, gamma, beta1, beta2, batch_size)
 
-    print(results['validation_accuracies'])
-
+    
 
 if __name__ == "__main__":
     main()
