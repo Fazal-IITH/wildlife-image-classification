@@ -53,15 +53,11 @@ def visualize_predictions(model, test_loader):
 
     model.eval()
 
-    images = []
-    true_labels = []
-    pred_labels = []
-
-    # Randomly choose 10 indices from the test dataset
     dataset_size = len(test_loader.dataset)
+
     selected_indices = random.sample(
         range(dataset_size),
-        min(10, dataset_size)
+        min(30, dataset_size)
     )
 
     class_names = [
@@ -77,6 +73,10 @@ def visualize_predictions(model, test_loader):
         "Reptilia"
     ]
 
+    images = []
+    preds = []
+    labels = []
+
     with torch.no_grad():
 
         for idx in selected_indices:
@@ -90,61 +90,62 @@ def visualize_predictions(model, test_loader):
             pred = output.argmax(dim=1).item()
 
             images.append(image)
-            true_labels.append(label)
-            pred_labels.append(pred)
+            preds.append(pred)
+            labels.append(label)
 
     fig, axes = plt.subplots(
         10,
         3,
-        figsize=(12, 30)
+        figsize=(12, 24)
     )
+
+    axes = axes.flatten()
 
     for i in range(len(images)):
 
         img = images[i].permute(1, 2, 0)
 
-        img = (img - img.min()) / (
-            img.max() - img.min()
+        img = (
+            img - img.min()
+        ) / (
+            img.max() - img.min() + 1e-8
         )
 
-        axes[i, 0].imshow(img)
-        axes[i, 0].axis("off")
-        axes[i, 0].set_title("Image")
+        ax = axes[i]
 
-        axes[i, 1].text(
-            0.5,
-            0.5,
-            class_names[true_labels[i]],
-            fontsize=12,
-            ha="center"
-        )
-        axes[i, 1].axis("off")
+        ax.imshow(img)
 
         color = (
             "green"
-            if true_labels[i] == pred_labels[i]
+            if preds[i] == labels[i]
             else "red"
         )
 
-        axes[i, 2].text(
-            0.5,
-            0.5,
-            class_names[pred_labels[i]],
-            fontsize=12,
-            ha="center",
+        ax.set_title(
+            f"Predicted: {class_names[preds[i]]}, "
+            f"Label: {class_names[labels[i]]}",
+            fontsize=10,
             color=color
         )
-        axes[i, 2].axis("off")
+
+        ax.axis("off")
 
     plt.tight_layout()
     plt.show()
 
-
 def visualize_first_layer_feature_maps(model, test_loader):
+
+    import random
+    import torch
+    import matplotlib.pyplot as plt
 
     device = next(model.parameters()).device
 
     model.eval()
+
+    # ---------------------------------------
+    # Random test image
+    # ---------------------------------------
 
     random_idx = random.randint(
         0,
@@ -157,6 +158,10 @@ def visualize_first_layer_feature_maps(model, test_loader):
 
     image = image.unsqueeze(0).to(device)
 
+    # ---------------------------------------
+    # First convolution layer output
+    # ---------------------------------------
+
     first_conv = model.hidden_layers[0]
 
     with torch.no_grad():
@@ -164,10 +169,13 @@ def visualize_first_layer_feature_maps(model, test_loader):
 
     feature_maps = feature_maps.squeeze(0).cpu()
 
-    # 8 rows × 9 columns
-    fig = plt.figure(figsize=(20, 16))
+    # ---------------------------------------
+    # Figure Layout
+    # ---------------------------------------
 
-    # Original image occupies first column
+    fig = plt.figure(figsize=(22, 16))
+
+    # Original image occupies left side
     ax_img = plt.subplot2grid(
         (8, 9),
         (0, 0),
@@ -184,12 +192,16 @@ def visualize_first_layer_feature_maps(model, test_loader):
 
     ax_img.imshow(image_for_display)
     ax_img.set_title(
-        "Original Image",
-        fontsize=14
+        "Original Test Image",
+        fontsize=16,
+        fontweight="bold"
     )
     ax_img.axis("off")
 
-    # Feature maps occupy remaining 8×8 grid
+    # ---------------------------------------
+    # 64 Feature Maps (8×8)
+    # ---------------------------------------
+
     for i in range(64):
 
         row = i // 8
@@ -200,9 +212,20 @@ def visualize_first_layer_feature_maps(model, test_loader):
             (row, col)
         )
 
+        fmap = feature_maps[i]
+
+        # Normalize each map separately
+        fmap = (
+            fmap - fmap.min()
+        ) / (
+            fmap.max()
+            - fmap.min()
+            + 1e-8
+        )
+
         ax.imshow(
-            feature_maps[i],
-            cmap="gray"
+            fmap,
+            cmap="viridis"
         )
 
         ax.set_title(
@@ -213,8 +236,9 @@ def visualize_first_layer_feature_maps(model, test_loader):
         ax.axis("off")
 
     plt.suptitle(
-        f"Original Image and First-Layer Feature Maps",
-        fontsize=18
+        "First Convolution Layer Feature Maps",
+        fontsize=22,
+        fontweight="bold"
     )
 
     plt.tight_layout()
