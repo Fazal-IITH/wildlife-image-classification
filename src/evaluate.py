@@ -17,7 +17,7 @@ def evaluate(Model, loss_func, val_loader):
 
     # Model.eval() turns off the dropout and BatchNorm does not compute mean and variance from the validation batch,
     # Insted it uses running mean and var that were accumulated during training.
-    # Pytorch uses running_mean = (0.9 * running_mean) + (0.1 * batch_mean)
+    # Pytorch uses running_mean = ((1 - momentum) * running_mean) + (momentum * batch_mean) (This momentum is diff from SGD)
     Model.eval()
     with torch.no_grad():
         for batch_X, batch_y in val_loader:
@@ -26,8 +26,8 @@ def evaluate(Model, loss_func, val_loader):
 
             # For F1-Score
             preds = outputs.argmax(dim=1)
-            all_preds.extend(preds.cpu().numpy()) # Why cpu(), bcoz numpy can works only with CPU
-            all_labels.extend(batch_y.cpu().numpy())
+            all_preds.extend(preds.cpu().tolist()) # Why cpu(), bcoz numpy can works only with CPU
+            all_labels.extend(batch_y.cpu().tolist())
 
             # For accuracy
             corrected+= (preds==batch_y).sum().item()
