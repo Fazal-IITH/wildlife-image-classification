@@ -40,7 +40,7 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
 
     for epoch in range(epochs):
 
-        print(epoch)
+        print(f"\nEpoch {epoch+1}/{epochs}")
         training_loss=0
         corrected=0
         total=0
@@ -76,10 +76,10 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
         validation_accuracies.append(validation_accuracy)
         validation_f1_scores.append(validation_f1_score)
        
-        print(training_loss)
-        print(training_accuracy)
-        print(validation_loss)
-        print(validation_accuracy)
+        print(f"Train Loss: {training_loss:.4f}")
+        print(f"Train Acc : {training_accuracy:.4f}")
+        print(f"Val Loss  : {validation_loss:.4f}")
+        print(f"Val Acc   : {validation_accuracy:.4f}")
 
     return {
         "training_losses": training_losses,
