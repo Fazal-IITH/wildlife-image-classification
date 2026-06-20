@@ -4,16 +4,15 @@ from src.model import CNN
 from src.utils import get_optimizer
 from src.evaluate import evaluate
 
-device = torch.device(
-    "cuda" if torch.cuda.is_available()
-    else "cpu"
-)
 # device = torch.device(
-#     "mps" if torch.backends.mps.is_available()
+#     "cuda" if torch.cuda.is_available()
 #     else "cpu"
 # )
+device = torch.device(
+    "mps" if torch.backends.mps.is_available()
+    else "cpu"
+)
 
-# print(f"Using device: {device}")
 print(f"Using device: {device}")
 
 def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_height, in_width, kernel_channels, 
@@ -37,6 +36,8 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
     validation_losses=[]
     validation_accuracies=[]
     validation_f1_scores=[]
+
+    best_val_acc = 0
 
     for epoch in range(epochs):
 
@@ -75,11 +76,40 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
         validation_losses.append(validation_loss)
         validation_accuracies.append(validation_accuracy)
         validation_f1_scores.append(validation_f1_score)
-       
-        print(f"Train Loss: {training_loss:.4f}")
-        print(f"Train Acc : {training_accuracy:.4f}")
-        print(f"Val Loss  : {validation_loss:.4f}")
-        print(f"Val Acc   : {validation_accuracy:.4f}")
+
+        if validation_accuracy > best_val_acc:
+            best_val_acc = validation_accuracy
+
+            torch.save({
+                "epoch": epoch,
+                "val_acc": validation_accuracy,
+
+                "model_params": {
+                    "num_blocks": num_blocks,
+                    "in_channels": in_channels,
+                    "in_height": in_height,
+                    "in_width": in_width,
+                    "kernel_channels": kernel_channels,
+                    "conv_kernel_sizes": conv_kernel_sizes,
+                    "conv_padding": conv_padding,
+                    "conv_stride": conv_stride,
+                    "pool_kernel_sizes": pool_kernel_sizes,
+                    "pool_stride": pool_stride,
+                    "activation": activation,
+                    "num_FC_layers": num_FC_layers,
+                    "FC_layers_sizes": FC_layers_sizes,
+                    "drop_prob": drop_prob,
+                    "batch_norm": batch_norm,
+                    "dropout": dropout
+                },
+
+                "model_state_dict": Model.state_dict(), # Stores all the trained parameters
+                "optimizer_state_dict": optimizer.state_dict() # Stores parameters for optimizer
+            }, "best_model.pth")
+        # print(f"Train Loss: {training_loss:.4f}")
+        # print(f"Train Acc : {training_accuracy:.4f}")
+        # print(f"Val Loss  : {validation_loss:.4f}")
+        # print(f"Val Acc   : {validation_accuracy:.4f}")
 
     return {
         "training_losses": training_losses,

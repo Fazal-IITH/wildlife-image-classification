@@ -24,15 +24,18 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
     TRAIN_PATH = "/content/wildlife-image-classification/inaturalist_12K/train"
     VAL_PATH = "/content/wildlife-image-classification/inaturalist_12K/val"
 
+    Local_Train_path='/Users/fazalmac/Desktop/Projects/Wildlife Image Classification using Custom CNNs and Transfer Learning/data/inaturalist_12K/train'
+    Local_Test_path='/Users/fazalmac/Desktop/Projects/Wildlife Image Classification using Custom CNNs and Transfer Learning/data/inaturalist_12K/test'
+
     #Num of Images=9999
     full_train_dataset = datasets.ImageFolder(
-        root=TRAIN_PATH,
+        root=Local_Train_path,
         transform=train_transform
     )
 
     # Same images, different transform
     full_val_dataset = datasets.ImageFolder(
-        root=TRAIN_PATH,
+        root=Local_Train_path,
         transform=test_transform
     )
 
@@ -53,7 +56,7 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
     val_dataset=Subset(full_val_dataset, val_indices)
     
     test_dataset=datasets.ImageFolder(
-        root=VAL_PATH,
+        root=Local_Test_path,
         transform=test_transform
     )
    
@@ -61,21 +64,18 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        num_workers=2
     )
 
     val_loader= DataLoader(
         val_dataset,
         batch_size=batch_size,
         shuffle=False, #Why False, bcoz model is not training and we want consistent measurement.
-        num_workers=2
     )
 
     test_loader= DataLoader(
         test_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=2
     )
 
     return train_loader, val_loader, test_loader
