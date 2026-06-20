@@ -23,13 +23,13 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
 
     #Num of Images=9999
     full_train_dataset = datasets.ImageFolder(
-        root="Wildlife Image Classification using Custom CNNs and Transfer Learning/data/inaturalist_12K/train",
+        root="/content/drive/MyDrive/inaturalist_12K/train",
         transform=train_transform
     )
 
     # Same images, different transform
     full_val_dataset = datasets.ImageFolder(
-        root="Wildlife Image Classification using Custom CNNs and Transfer Learning/data/inaturalist_12K/train",
+        root="/content/drive/MyDrive/inaturalist_12K/train",
         transform=test_transform
     )
 
@@ -50,7 +50,7 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
     val_dataset=Subset(full_val_dataset, val_indices)
     
     test_dataset=datasets.ImageFolder(
-        root='/Users/fazalmac/Desktop/Projects/Wildlife Image Classification using Custom CNNs and Transfer Learning/data/inaturalist_12K/test',
+        root="/content/drive/MyDrive/inaturalist_12K/test",
         transform=test_transform
     )
    
