@@ -66,18 +66,20 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
 
             optimizer.step()
 
-        training_losses.append(training_loss/len(train_loader))
-        training_accuracies.append(corrected/total)
+        training_loss= training_loss/len(train_loader)
+        training_losses.append(training_loss)
+        training_accuracy= corrected/total
+        training_accuracies.append(training_accuracy)
 
         validation_loss, validation_accuracy, validation_f1_score=evaluate(Model, loss_func, val_loader)
         validation_losses.append(validation_loss)
         validation_accuracies.append(validation_accuracy)
         validation_f1_scores.append(validation_f1_score)
        
-        print(corrected/total)
         print(training_loss)
-        print(validation_accuracy)
+        print(training_accuracy)
         print(validation_loss)
+        print(validation_accuracy)
 
     return {
         "training_losses": training_losses,
