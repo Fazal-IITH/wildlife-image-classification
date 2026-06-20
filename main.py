@@ -15,13 +15,13 @@ def main():
     pool_stride = [2, 2, 2, 2,2]
     activation = "ReLU"
     num_FC_layers = 1
-    FC_layers_sizes = [1024]
+    FC_layers_sizes = [512]
     optimizer_name = "AdamW"
-    learning_rate = 1e-3
+    learning_rate = 1e-2
     weight_decay = 1e-4
     batch_norm = True
-    dropout = False
-    drop_prob = 0.5
+    dropout = True
+    drop_prob = 0.2
     augmentation = True
     batch_size = 64
     gamma = 0.9      # for SGD/Momentum only
