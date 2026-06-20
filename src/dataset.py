@@ -20,16 +20,19 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
         ])
     else:
         train_transform = test_transform
+    
+    TRAIN_PATH = "/content/wildlife-image-classification/inaturalist_12K/train"
+    VAL_PATH = "/content/wildlife-image-classification/inaturalist_12K/val"
 
     #Num of Images=9999
     full_train_dataset = datasets.ImageFolder(
-        root="/content/drive/MyDrive/inaturalist_12K/train",
+        root=TRAIN_PATH,
         transform=train_transform
     )
 
     # Same images, different transform
     full_val_dataset = datasets.ImageFolder(
-        root="/content/drive/MyDrive/inaturalist_12K/train",
+        root=TRAIN_PATH,
         transform=test_transform
     )
 
@@ -50,7 +53,7 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
     val_dataset=Subset(full_val_dataset, val_indices)
     
     test_dataset=datasets.ImageFolder(
-        root="/content/drive/MyDrive/inaturalist_12K/test",
+        root=VAL_PATH,
         transform=test_transform
     )
    
