@@ -1,5 +1,6 @@
 import torch
 from pathlib import Path
+import os
 
 
 if torch.cuda.is_available():
@@ -12,7 +13,16 @@ else:
     device = torch.device("cpu")
 
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+# Colab
+if os.path.exists("/content/wildlife-image-classification"):
 
-TRAIN_PATH = str(PROJECT_ROOT / "data" / "inaturalist_12K" / "train")
-TEST_PATH = str(PROJECT_ROOT / "data" / "inaturalist_12K" / "test")
+    TRAIN_PATH = "/content/wildlife-image-classification/inaturalist_12K/train"
+    TEST_PATH = "/content/wildlife-image-classification/inaturalist_12K/val"
+
+# Local
+else:
+
+    PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+    TRAIN_PATH = str(PROJECT_ROOT / "data" / "inaturalist_12K" / "train")
+    TEST_PATH = str(PROJECT_ROOT / "data" / "inaturalist_12K" / "test")
