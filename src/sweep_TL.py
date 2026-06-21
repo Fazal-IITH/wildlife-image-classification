@@ -4,7 +4,7 @@ from src.train_TL import train_model_TL
 from src.dataset import get_dataloaders_TL
 
 sweep_config = {
-    "method": "bayes",
+    "method": "random",
 
     "metric": {
         "name": "val_accuracy",
@@ -17,7 +17,7 @@ sweep_config = {
             "values": [
                 "Fixed Feature Extractor",
                 "Partial Fine-Tuning",
-                # "Full Fine-Tuning"
+                "Full Fine-Tuning"
             ]
         },
 
@@ -55,7 +55,7 @@ sweep_config = {
         },
 
         "epochs": {
-            "values": [10, 15]
+            "values": [10, 15, 20]
         },
 
         "optimizer": {
@@ -128,13 +128,18 @@ def train_transfer_learning():
     wandb.finish()
 
 
-sweep_id = wandb.sweep(
-    sweep_config,
-    project="Transfer Learning"
-)
+def main():
 
-wandb.agent(
-    sweep_id,
-    function=train_transfer_learning,
-    count=5
-)
+    sweep_id = wandb.sweep(
+        sweep_config,
+        project="Transfer Learning"
+    )
+
+    wandb.agent(
+        sweep_id,
+        function=train_transfer_learning,
+        count=1
+    )
+
+if __name__ == "__main__":
+    main()

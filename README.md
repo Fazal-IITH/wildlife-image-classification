@@ -115,9 +115,9 @@ The model is evaluated using:
 
 | Metric              | Score   |
 | ------------------- | ------- |
-| Validation Accuracy | XX.XX % |
-| Test Accuracy       | XX.XX % |
-| Macro F1 Score      | XX.XX   |
+| Validation Accuracy | 41.85 % |
+| Test Accuracy       | 41.3 % |
+| Macro F1 Score      | 0.42   |
 
 ---
 
@@ -198,10 +198,10 @@ Bayesian Optimization was used to efficiently explore the search space.
 
 | Metric              | Score      |
 | ------------------- | ---------- |
-| Validation Accuracy | XX.XX %    |
-| Test Accuracy       | XX.XX %    |
-| Macro F1 Score      | XX.XX      |
-| Best Strategy       | Strategy X |
+| Validation Accuracy | 86.8 %    |
+| Test Accuracy       | 84.2 %    |
+| Macro F1 Score      | 0.85     |
+| Best Strategy       | Partial Fine-Tuning  |
 
 ---
 
