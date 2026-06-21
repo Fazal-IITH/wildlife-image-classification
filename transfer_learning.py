@@ -15,13 +15,14 @@ def transfer_learning():
     # Strategy 2: Partial Fine-Tuning
     # Strategy 3: Full Fine-Tuning
 
+    
     model=model_2()
     model=model.to(device)
-    strategy="Fixed Feature Extractor"
-    epochs = 5
+    strategy="Partial Fine-Tuning"
+    epochs = 20
     activation = "ReLU"
     optimizer_name = "AdamW"
-    learning_rate = 1e-3
+    learning_rate = 1e-4
     weight_decay = 1e-4
     batch_norm = True
     dropout = True
