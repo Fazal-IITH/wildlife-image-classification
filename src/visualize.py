@@ -4,32 +4,15 @@ from src.model import CNN
 import random
 import matplotlib.pyplot as plt
 
-def print_summary():
 
-    model = CNN(
-        num_blocks=5,
-        in_channels=3,
-        in_height=224,
-        in_width=224,
+# Prints out Model Summary
+def print_summary(num_blocks, in_channels, in_height, in_width, kernel_channels, conv_kernel_sizes, conv_padding,
+                conv_stride, pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes,
+                drop_prob, batch_norm, dropout):
 
-        kernel_channels=[32, 64, 128, 256, 512],
-
-        conv_kernel_sizes=[3, 3, 3, 3, 3],
-        conv_padding=[1, 1, 1, 1, 1],
-        conv_stride=[1, 1, 1, 1, 1],
-
-        pool_kernel_sizes=[2, 2, 2, 2, 2],
-        pool_stride=[2, 2, 2, 2, 2],
-
-        activation="ReLU",
-
-        num_FC_layers=1,
-        FC_layers_sizes=[1024],
-
-        drop_prob=0.5,
-        batch_norm=True,
-        dropout=False
-    )
+    model = CNN(num_blocks, in_channels, in_height, in_width, kernel_channels, conv_kernel_sizes, conv_padding,
+                conv_stride, pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes,
+                drop_prob, batch_norm, dropout)
 
     print(summary(
         model,
@@ -47,6 +30,8 @@ def print_summary():
     print(f"Trainable Parameters: {trainable_params:,}")
 
 
+
+# Gives image as an output containing 30 random images from test set with their correct label and predicted label
 def visualize_predictions(model, test_loader):
 
     device = next(model.parameters()).device
@@ -132,10 +117,14 @@ def visualize_predictions(model, test_loader):
 
     plt.tight_layout()
     plt.show()
+    plt.close(fig)
 
+
+# Gives image of the input image and the feature maps of the first layer
 def visualize_first_layer_feature_maps(model, test_loader):
 
     import random
+    import math
     import torch
     import matplotlib.pyplot as plt
 
@@ -162,24 +151,42 @@ def visualize_first_layer_feature_maps(model, test_loader):
     # First convolution layer output
     # ---------------------------------------
 
-    first_conv = model.hidden_layers[0]
+    if hasattr(model, "hidden_layers"):
+        first_conv = model.hidden_layers[0]
+    elif hasattr(model, "conv1"):
+        first_conv = model.conv1
+    else:
+        raise ValueError("Cannot find first convolution layer")
 
     with torch.no_grad():
         feature_maps = first_conv(image)
 
     feature_maps = feature_maps.squeeze(0).cpu()
 
+    num_filters = feature_maps.shape[0]
+
     # ---------------------------------------
-    # Figure Layout
+    # Dynamic Grid Size
     # ---------------------------------------
 
-    fig = plt.figure(figsize=(22, 16))
+    grid_cols = math.ceil(math.sqrt(num_filters))
+    grid_rows = math.ceil(num_filters / grid_cols)
 
-    # Original image occupies left side
+    # +1 column for original image
+    total_cols = grid_cols + 1
+
+    fig = plt.figure(
+        figsize=(3 * total_cols, 3 * grid_rows)
+    )
+
+    # ---------------------------------------
+    # Original Image
+    # ---------------------------------------
+
     ax_img = plt.subplot2grid(
-        (8, 9),
+        (grid_rows, total_cols),
         (0, 0),
-        rowspan=8
+        rowspan=grid_rows
     )
 
     image_for_display = (
@@ -191,30 +198,31 @@ def visualize_first_layer_feature_maps(model, test_loader):
     )
 
     ax_img.imshow(image_for_display)
+
     ax_img.set_title(
-        "Original Test Image",
-        fontsize=16,
+        "Original Image",
+        fontsize=14,
         fontweight="bold"
     )
+
     ax_img.axis("off")
 
     # ---------------------------------------
-    # 64 Feature Maps (8×8)
+    # Feature Maps
     # ---------------------------------------
 
-    for i in range(64):
+    for i in range(num_filters):
 
-        row = i // 8
-        col = (i % 8) + 1
+        row = i // grid_cols
+        col = (i % grid_cols) + 1
 
         ax = plt.subplot2grid(
-            (8, 9),
+            (grid_rows, total_cols),
             (row, col)
         )
 
         fmap = feature_maps[i]
 
-        # Normalize each map separately
         fmap = (
             fmap - fmap.min()
         ) / (
@@ -236,11 +244,13 @@ def visualize_first_layer_feature_maps(model, test_loader):
         ax.axis("off")
 
     plt.suptitle(
-        "First Convolution Layer Feature Maps",
-        fontsize=22,
+        f"First Layer Feature Maps ({num_filters} Filters)",
+        fontsize=20,
         fontweight="bold"
     )
 
     plt.tight_layout()
 
     plt.show()
+
+    plt.close(fig)
