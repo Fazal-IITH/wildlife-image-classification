@@ -110,7 +110,7 @@ sweep_config = {
 def train_wandb():
 
     wandb.init(
-        project="Wildlife Image Classification using Custom CNNs and Transfer Learning"
+        project="Transfer Learning"
     )
 
     config = wandb.config
@@ -198,7 +198,7 @@ def train_wandb():
 
 sweep_id = wandb.sweep(
     sweep_config,
-    project="Wildlife Image Classification using Custom CNNs and Transfer Learning"
+    project="Transfer Learning"
 )
 
 wandb.agent(
