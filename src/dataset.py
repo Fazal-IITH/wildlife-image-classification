@@ -29,13 +29,13 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
 
     #Num of Images=9999
     full_train_dataset = datasets.ImageFolder(
-        root=Local_Train_path,
+        root=TRAIN_PATH,
         transform=train_transform
     )
 
     # Same images, different transform
     full_val_dataset = datasets.ImageFolder(
-        root=Local_Train_path,
+        root=TRAIN_PATH,
         transform=test_transform
     )
 
@@ -56,7 +56,7 @@ def get_dataloaders(image_height, image_width, batch_size=32, augmentation=False
     val_dataset=Subset(full_val_dataset, val_indices)
     
     test_dataset=datasets.ImageFolder(
-        root=Local_Test_path,
+        root=VAL_PATH,
         transform=test_transform
     )
    

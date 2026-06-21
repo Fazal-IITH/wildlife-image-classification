@@ -4,14 +4,14 @@ from src.model import CNN
 from src.utils import get_optimizer
 from src.evaluate import evaluate
 
-# device = torch.device(
-#     "cuda" if torch.cuda.is_available()
-#     else "cpu"
-# )
 device = torch.device(
-    "mps" if torch.backends.mps.is_available()
+    "cuda" if torch.cuda.is_available()
     else "cpu"
 )
+# device = torch.device(
+#     "mps" if torch.backends.mps.is_available()
+#     else "cpu"
+# )
 
 print(f"Using device: {device}")
 
@@ -106,10 +106,10 @@ def train_model(train_loader, val_loader, epochs, num_blocks, in_channels, in_he
                 "model_state_dict": Model.state_dict(), # Stores all the trained parameters
                 "optimizer_state_dict": optimizer.state_dict() # Stores parameters for optimizer
             }, "best_model.pth")
-        # print(f"Train Loss: {training_loss:.4f}")
-        # print(f"Train Acc : {training_accuracy:.4f}")
-        # print(f"Val Loss  : {validation_loss:.4f}")
-        # print(f"Val Acc   : {validation_accuracy:.4f}")
+        print(f"Train Loss: {training_loss:.4f}")
+        print(f"Train Acc : {training_accuracy:.4f}")
+        print(f"Val Loss  : {validation_loss:.4f}")
+        print(f"Val Acc   : {validation_accuracy:.4f}")
 
     return {
         "training_losses": training_losses,
