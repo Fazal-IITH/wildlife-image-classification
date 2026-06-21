@@ -17,7 +17,7 @@ sweep_config = {
             "values": [
                 "Fixed Feature Extractor",
                 "Partial Fine-Tuning",
-                "Full Fine-Tuning"
+                # "Full Fine-Tuning"
             ]
         },
 
