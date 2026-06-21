@@ -130,7 +130,7 @@ def train_transfer_learning():
 
 sweep_id = wandb.sweep(
     sweep_config,
-    project="Wildlife-Transfer-Learning"
+    project="Transfer Learning"
 )
 
 wandb.agent(
