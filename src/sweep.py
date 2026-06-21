@@ -204,5 +204,5 @@ sweep_id = wandb.sweep(
 wandb.agent(
     sweep_id,
     function=train_wandb,
-    count=1
+    count=10
 )
