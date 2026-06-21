@@ -24,7 +24,7 @@ sweep_config = {
     "parameters": {
 
         "epochs": {
-            "values": [5,10,15]
+            "values": [5,10,15,20]
         },
 
         "num_blocks": {
@@ -44,21 +44,21 @@ sweep_config = {
         },
 
         "optimizer_name": {
-            "values": ["Adam", "AdamW"] #,"Momentum","SGD"
+            "values": ["Adam", "AdamW", "Momentum","SGD"] 
         },
 
         "activation": {
             "values": [
                 "ReLU",
-                # "GELU",
-                # "SiLU",
-                # "Mish",
-                # "LeakyReLU"
+                "GELU",
+                "SiLU",
+                "Mish",
+                "LeakyReLU"
             ]
         },
 
         "batch_norm": {
-            "value": True
+            "values": [True, False]
         },
 
         "augmentation": {
@@ -90,18 +90,18 @@ sweep_config = {
                 [64, 64, 64, 64, 64]
 
                 # # Doubling
-                # [16, 32, 64, 128, 256],
+                [16, 32, 64, 128, 256],
 
                 # # Halving
-                # [256, 128, 64, 32, 16]
+                [256, 128, 64, 32, 16]
             ]
         },
 
         "FC_layers_sizes": {
             "values": [
                 [256],
-                # [512],
-                # [1024]
+                [512],
+                [1024]
             ]
         }
     }
@@ -204,5 +204,5 @@ sweep_id = wandb.sweep(
 wandb.agent(
     sweep_id,
     function=train_wandb,
-    count=15
+    count=5
 )
