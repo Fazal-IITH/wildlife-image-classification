@@ -44,21 +44,21 @@ sweep_config = {
         },
 
         "optimizer_name": {
-            "values": ["Adam", "AdamW","Momentum","SGD"]
+            "values": ["Adam", "AdamW"] #,"Momentum","SGD"
         },
 
         "activation": {
             "values": [
                 "ReLU",
-                "GELU",
-                "SiLU",
-                "Mish",
+                # "GELU",
+                # "SiLU",
+                # "Mish",
                 "LeakyReLU"
             ]
         },
 
         "batch_norm": {
-            "values": [True, False]
+            "value": True
         },
 
         "augmentation": {
@@ -204,5 +204,5 @@ sweep_id = wandb.sweep(
 wandb.agent(
     sweep_id,
     function=train_wandb,
-    count=10
+    count=15
 )
