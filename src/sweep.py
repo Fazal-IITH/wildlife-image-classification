@@ -53,7 +53,7 @@ sweep_config = {
                 # "GELU",
                 # "SiLU",
                 # "Mish",
-                "LeakyReLU"
+                # "LeakyReLU"
             ]
         },
 
