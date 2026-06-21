@@ -27,16 +27,16 @@ def transfer_learning():
     dropout = True
     drop_prob = 0.2
     augmentation = True
-    batch_size = 64
+    batch_size = 32
     gamma = 0.9      # for SGD/Momentum only
     beta1 = 0.9      # Adam/AdamW
     beta2 = 0.999
 
     train_loader, val_loader, _= get_dataloaders_TL(batch_size, augmentation)
 
-    # results= train_model_TL(strategy, model, train_loader, val_loader, epochs, activation,
-    #              optimizer_name, batch_norm, dropout, drop_prob, augmentation,
-    #              learning_rate,weight_decay, gamma, beta1, beta2, batch_size)
+    results= train_model_TL(strategy, model, train_loader, val_loader, epochs, activation,
+                 optimizer_name, batch_norm, dropout, drop_prob, augmentation,
+                 learning_rate,weight_decay, gamma, beta1, beta2, batch_size)
 
     test_model_TL(visualize=True)
 
