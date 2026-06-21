@@ -3,7 +3,7 @@ from src.train import train_model
 from src.config import device
 from src.test import test_model
 import torch
-
+from src.model import CNN
 
 def main():
 
@@ -13,7 +13,7 @@ def main():
 
     epochs = 1
     num_blocks = 5
-    kernel_channels = [256, 16, 16, 16, 16] 
+    kernel_channels = [16, 16, 16, 16, 16] 
     conv_kernel_sizes = [3, 3, 3, 3, 3]
     conv_padding = [1, 1, 1, 1,1]
     conv_stride = [1, 1, 1, 1,1]
@@ -29,7 +29,7 @@ def main():
     dropout = True
     drop_prob = 0.2
     augmentation = False
-    batch_size = 64
+    batch_size = 32
     gamma = 0.9      # for SGD/Momentum only
     beta1 = 0.9      # Adam/AdamW
     beta2 = 0.999
@@ -38,8 +38,10 @@ def main():
     image_height = 224
     image_width = 224
 
+
     train_loader, val_loader, _ = get_dataloaders(image_height, image_width, batch_size, augmentation)
 
+    
     results= train_model(train_loader, val_loader, epochs, num_blocks, image_channels, image_height, image_width, kernel_channels, 
                      conv_kernel_sizes, conv_padding, conv_stride, 
                      pool_kernel_sizes, pool_stride, activation, num_FC_layers, FC_layers_sizes,

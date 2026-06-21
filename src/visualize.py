@@ -117,7 +117,7 @@ def visualize_predictions(model, test_loader):
 
     plt.tight_layout()
     plt.show()
-
+    plt.close(fig)
 
 
 # Gives image of the input image and the feature maps of the first layer
@@ -252,3 +252,5 @@ def visualize_first_layer_feature_maps(model, test_loader):
     plt.tight_layout()
 
     plt.show()
+
+    plt.close(fig)

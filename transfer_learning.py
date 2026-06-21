@@ -3,17 +3,22 @@ from src.train_TL import train_model_TL
 from src.model_TL import model_1, model_2, model_3
 from src.test_TL import test_model_TL
 from src.config import device
+import torch
 
 def transfer_learning():
+
+    print(f"\nUsing device: {device}")
+    print(torch.backends.mps.is_available())
+    print(torch.backends.mps.is_built())
 
     # Strategy 1: Fixed Feature Extractor
     # Strategy 2: Partial Fine-Tuning
     # Strategy 3: Full Fine-Tuning
 
-    model=model_1()
+    model=model_2()
     model=model.to(device)
     strategy="Fixed Feature Extractor"
-    epochs = 1
+    epochs = 5
     activation = "ReLU"
     optimizer_name = "AdamW"
     learning_rate = 1e-3
