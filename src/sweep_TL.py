@@ -55,7 +55,7 @@ sweep_config = {
         },
 
         "epochs": {
-            "values": [5,10]
+            "values": [10, 15]
         },
 
         "optimizer": {
