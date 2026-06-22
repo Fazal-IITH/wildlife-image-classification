@@ -207,7 +207,7 @@ Bayesian Optimization was used to efficiently explore the search space.
 
 | Model | Validation Accuracy | Macro F1 Score | Test Accuracy | 
 |---------|---------|---------|
-| ResNet50 (Fixed Feature Extractor) | XX.XX% | XX.XX | 84.2% |
+| ResNet50 (Fixed Feature Extractor) | 82.35% | 0.83 | 83.05% |
 | ResNet50 (Partial Fine-Tuning) | 86.8% | 0.85 | 84.2% |
 | ResNet50 (Full Fine-Tuning) | Not Trained* | - | - |
 
