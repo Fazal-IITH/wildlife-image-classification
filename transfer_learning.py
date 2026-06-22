@@ -19,10 +19,10 @@ def transfer_learning():
     model=model_1()
     model=model.to(device)
     strategy="Fixed Feature Extractor"
-    epochs = 20
+    epochs = 30
     activation = "ReLU"
     optimizer_name = "AdamW"
-    learning_rate = 1e-4
+    learning_rate = 1e-3
     weight_decay = 1e-4
     batch_norm = True
     dropout = True

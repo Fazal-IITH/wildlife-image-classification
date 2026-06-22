@@ -203,6 +203,16 @@ Bayesian Optimization was used to efficiently explore the search space.
 | Macro F1 Score      | 0.85     |
 | Best Strategy       | Partial Fine-Tuning  |
 
+## Results Comparison
+
+| Model | Validation Accuracy | Macro F1 Score | Test Accuracy | 
+|---------|---------|---------|
+| ResNet50 (Fixed Feature Extractor) | XX.XX% | XX.XX | 84.2% |
+| ResNet50 (Partial Fine-Tuning) | 86.8% | 0.85 | 84.2% |
+| ResNet50 (Full Fine-Tuning) | Not Trained* | - | - |
+
+*Full fine-tuning was implemented but not extensively trained due to its significantly higher computational and time requirements. Since the iNaturalist 12K dataset is significantly smaller than the ImageNet dataset on which ResNet50 was pretrained, the model is more susceptible to overfitting during fine-tuning.
+
 ---
 
 # Visualizations
