@@ -11,7 +11,7 @@ def main():
     print(torch.backends.mps.is_available())
     print(torch.backends.mps.is_built())
 
-    epochs = 10
+    epochs = 30
     num_blocks = 6
     kernel_channels = [32, 64, 128, 256, 512, 512] 
     conv_kernel_sizes = [3, 3, 3, 3, 3, 3]
