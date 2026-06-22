@@ -11,17 +11,17 @@ def main():
     print(torch.backends.mps.is_available())
     print(torch.backends.mps.is_built())
 
-    epochs = 20
-    num_blocks = 5
-    kernel_channels = [64, 64, 64, 64, 64] 
-    conv_kernel_sizes = [3, 3, 3, 3, 3]
-    conv_padding = [1, 1, 1, 1,1]
-    conv_stride = [1, 1, 1, 1,1]
-    pool_kernel_sizes = [2, 2, 2, 2,2]
-    pool_stride = [2, 2, 2, 2,2]
+    epochs = 5
+    num_blocks = 6
+    kernel_channels = [16, 32, 64, 128, 256, 512] 
+    conv_kernel_sizes = [3, 3, 3, 3, 3, 3]
+    conv_padding = [1, 1, 1, 1, 1, 1]
+    conv_stride = [1, 1, 1, 1, 1, 1]
+    pool_kernel_sizes = [2, 2, 2, 2, 2, 2]
+    pool_stride = [2, 2, 2, 2, 2, 2]
     activation = "ReLU"
-    num_FC_layers = 1
-    FC_layers_sizes = [256]
+    num_FC_layers = 2
+    FC_layers_sizes = [512, 256]
     optimizer_name = "AdamW"
     learning_rate = 1e-3
     weight_decay = 1e-4
@@ -29,7 +29,7 @@ def main():
     dropout = True
     drop_prob = 0.2
     augmentation = True
-    batch_size = 32
+    batch_size = 64
     gamma = 0.9      # for SGD/Momentum only
     beta1 = 0.9      # Adam/AdamW
     beta2 = 0.999
