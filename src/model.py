@@ -59,7 +59,7 @@ class CNN(nn.Module):
             self.hidden_layers.append(nn.MaxPool2d(kernel_size=pool_kernel_sizes[i], stride=pool_stride[i]))
         
         # FC_input= (height * width * in_channels)
-    
+        self.global_pool = nn.AdaptiveAvgPool2d((1,1))
         # Dummy Pass to calculate FC layer input dimensions
         with torch.no_grad():
             dummy = torch.zeros(1, original_in_channels, in_height, in_width)
@@ -67,6 +67,7 @@ class CNN(nn.Module):
             for layer in self.hidden_layers:
                 dummy = layer(dummy)
 
+            dummy = self.global_pool(dummy)
             FC_input = dummy.flatten(1).shape[1] # x.flatten(1) starts falttening from dim 1, leave dim 0 for batches
 
         for i in range(num_FC_layers):
@@ -84,6 +85,7 @@ class CNN(nn.Module):
         for layer in self.hidden_layers:
             x=layer(x)
 
+        x = self.global_pool(x)
         x= x.flatten(1)
 
         for layer in self.FC_layers:
