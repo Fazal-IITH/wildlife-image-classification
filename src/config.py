@@ -15,14 +15,14 @@ else:
 # For kaggle
 if os.path.exists("/kaggle"):
 
-    TRAIN_PATH = "/kaggle/input/inaturalist-12k/train"
-    TEST_PATH = "/kaggle/input/inaturalist-12k/test"
+    TRAIN_PATH = "/kaggle/input/datasets/fazal8172/inaturalist-12k/inaturalist_12K/train"
+    TEST_PATH = "/kaggle/input/datasets/fazal8172/inaturalist-12k/inaturalist_12K/val"
 
 # For Google Colab
 elif os.path.exists("/content"):
 
     TRAIN_PATH = "/content/wildlife-image-classification/inaturalist_12K/train"
-    TEST_PATH = "/content/wildlife-image-classification/inaturalist_12K/test"
+    TEST_PATH = "/content/wildlife-image-classification/inaturalist_12K/val"
 
 # For the local computer
 else:
