@@ -11,23 +11,23 @@ def main():
     print(torch.backends.mps.is_available())
     print(torch.backends.mps.is_built())
 
-    epochs = 5
-    num_blocks = 6
-    kernel_channels = [16, 32, 64, 128, 256, 512] 
-    conv_kernel_sizes = [3, 3, 3, 3, 3, 3]
-    conv_padding = [1, 1, 1, 1, 1, 1]
-    conv_stride = [1, 1, 1, 1, 1, 1]
-    pool_kernel_sizes = [2, 2, 2, 2, 2, 2]
-    pool_stride = [2, 2, 2, 2, 2, 2]
+    epochs = 30
+    num_blocks = 5
+    kernel_channels = [64, 128, 256, 512, 512] 
+    conv_kernel_sizes = [3, 3, 3, 3, 3]
+    conv_padding = [1, 1, 1, 1, 1]
+    conv_stride = [1, 1, 1, 1, 1]
+    pool_kernel_sizes = [2, 2, 2, 2, 2]
+    pool_stride = [2, 2, 2, 2, 2]
     activation = "ReLU"
-    num_FC_layers = 2
-    FC_layers_sizes = [512, 256]
+    num_FC_layers = 1
+    FC_layers_sizes = [512]
     optimizer_name = "AdamW"
-    learning_rate = 1e-3
+    learning_rate = 3e-4
     weight_decay = 1e-4
     batch_norm = True
     dropout = True
-    drop_prob = 0.2
+    drop_prob = 0.5
     augmentation = True
     batch_size = 64
     gamma = 0.9      # for SGD/Momentum only
