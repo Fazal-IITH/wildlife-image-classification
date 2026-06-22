@@ -115,8 +115,8 @@ The model is evaluated using:
 
 | Metric              | Score   |
 | ------------------- | ------- |
-| Validation Accuracy | 41.85 % |
-| Test Accuracy       | 41.3 % |
+| Validation Accuracy | 45.15 % |
+| Test Accuracy       | 45.80 % |
 | Macro F1 Score      | 0.42   |
 
 ---
