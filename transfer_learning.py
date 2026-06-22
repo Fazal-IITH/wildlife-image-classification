@@ -26,7 +26,7 @@ def transfer_learning():
     weight_decay = 1e-4
     batch_norm = True
     dropout = True
-    drop_prob = 0.2
+    drop_prob = 0.3
     augmentation = True
     batch_size = 32
     gamma = 0.9      # for SGD/Momentum only
